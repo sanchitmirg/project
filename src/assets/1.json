@@ -1,0 +1,13 @@
+{
+    "general": [
+      {
+        "id": "1",
+        "name": "Check Up and Consultation"
+      },
+      {
+        "id": "2",
+        "name": "X-Ray"
+      }
+
+    ]
+}

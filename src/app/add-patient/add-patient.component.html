@@ -1,0 +1,161 @@
+<td-layout-nav>
+  <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <span>Dev Clinic</span>
+    <span flex></span>
+  </div>
+  <md-card>
+    <div class="md-content" class="inset">
+      <div layout="column" layout-gt-xs="row">
+        <div flex>
+          <form #patientForm="ngForm">
+            <md-card>
+              <div layout="row">
+                <div layout="column">
+                  <md-card-title>Patient Information</md-card-title>
+                </div>
+                <div layout='column' style="float:right; padding-left:20px">
+                  <md-input-container>
+                    <input #patientsearch (keyup)="filterPatients(patient.value)" mdInput [mdAutocomplete]="autopatients" [(ngModel)] ="clientSearchString"
+                      placeholder="Search Patient" name="patientname">
+                  </md-input-container>
+                  <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName" (blur)="fetchPatient(c)">
+                    <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" [value]="c">
+                      {{ c.firstname }}
+                    </md-option>
+                  </md-autocomplete>
+                </div>
+              </div>
+              <md-divider></md-divider>
+
+              <md-card-content>
+
+                <div layout="row" flex>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="Firstname"  name="firstname" [(ngModel)]="patient.firstname" ></md-input-container>
+                  </div>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="Lastname" name="lastname" [(ngModel)]="patient.lastname" ></md-input-container>
+                  </div>
+                  <div layout="column" class="left-padding right-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="Email" [(ngModel)]="patient.email" name="email"></md-input-container>
+                  </div>
+                </div>
+                <div layout="row" flex>
+                  <div layout="column" class="left-padding" style="padding-top:5px" flex>
+                    <md-select placeholder="Gender" name="gender" [(ngModel)]="patient.gender">
+                      <md-option *ngFor="let gender of genders" [value]="gender.value" name="genderselection">
+                        {{ gender.viewValue }}
+                      </md-option>
+                    </md-select>
+                  </div>
+                  <div layout="column" class="left-padding right-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="Birth Date" [(ngModel)]="patient.dob" name="dob"></md-input-container>
+                  </div>
+                  <!-- <div layout="column" class="left-padding right-padding" flex>
+                <md-input-container flex> <input mdInput placeholder="Patient Id" name="patientId"></md-input-container>
+              </div> -->
+                  <div layout="column" class="left-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="Mobile Number" [(ngModel)]="patient.number" name="mobileNumber"></md-input-container>
+                  </div>
+                </div>
+
+                <div layout="row" flex>
+                  <div layout="column" class="left-padding" style="padding-top:5px" flex>
+                    <md-input-container flex> <input mdInput placeholder="Weight(Kg)" [(ngModel)]="patient.weight" name="weight"></md-input-container>
+                  </div>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-select placeholder="Blood Group" name="bloodgroup" [(ngModel)]="patient.bloodGroup">
+                      <md-option *ngFor="let bloodgroup of bloodGroups" [value]="bloodgroup.value">
+                        {{ bloodgroup.viewValue }}
+                      </md-option>
+                    </md-select>
+                  </div>
+                  <div layout="column" class="left-padding right-padding top-padding" flex>
+                    <md-select placeholder="Language Preferred" name="preferredlanguage" [(ngModel)]="patient.preferredLanguage">
+                      <md-option *ngFor="let language of languages" [value]="language.value">
+                        {{ language.viewValue }}
+                      </md-option>
+                    </md-select>
+                  </div>
+                </div>
+                <!-- <form> -->
+
+                <!-- </form> -->
+
+              </md-card-content>
+            </md-card>
+            <td-expansion-panel style="margin-left:8px; margin-right:8px" label="Address Details" [disabled]="disabled">
+              <div class="md-padding">
+                <div layout="row" flex>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="Address" name="address" [(ngModel)]="address.street"></md-input-container>
+                  </div>
+                </div>
+                <div layout="row" flex>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input #state mdInput placeholder="State" [mdAutocomplete]="autostates" (keyup)="filterStates(state.value)"
+                        name="state"></md-input-container>
+                    <md-autocomplete #autostates="mdAutocomplete"  [displayWith]="displayStateName">
+                      <md-option *ngFor="let c of filteredStates" [value]="c" (onSelectionChange)="fetchStateName(C)" (blur)="fetchStateName(c)">
+                        {{ c.name }}
+                      </md-option>
+                    </md-autocomplete>
+                  </div>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="City" [(ngModel)]="address.city" name="city"></md-input-container>
+                  </div>
+
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input #country mdInput placeholder="Country" [mdAutocomplete]="autocountries" (keyup)="filterCountries(country.value)"
+                        name="country"></md-input-container>
+
+                    <md-autocomplete #autocountries="mdAutocomplete" [displayWith]="displayProductName">
+                      <md-option *ngFor="let c of filteredCountries" [value]="c"  (onSelectionChange)="fetchCountry(c)" (blur)="fetchCountryName(c)">
+                        {{ c.name }}
+                      </md-option>
+                    </md-autocomplete>
+                  </div>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="Pincode" name="pincode" [(ngModel)]="address.pincode" name="pincode"></md-input-container>
+                  </div>
+                </div>
+              </div>
+            </td-expansion-panel>
+            <td-expansion-panel style="margin-left:8px; margin-right:8px; margin-top:8px" label="Schedule Appointment" [disabled]="disabled">
+              <div class="md-padding">
+                <div layout="row" flex>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="Date" [(ngModel)]="appointmentDetails.appointmentDate" name="date"></md-input-container>
+                  </div>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="startTime" [(ngModel)]="appointmentDetails.startTime" name="starttime"></md-input-container>
+                  </div>
+                  <div layout="column" class="left-padding top-padding" flex>
+                    <md-input-container flex> <input mdInput placeholder="endTime" [(ngModel)]="appointmentDetails.endTime" name="Endtime"></md-input-container>
+                  </div>
+                </div>
+              </div>
+              <div layout="row" flex>
+                <div layout="column" class="left-padding">
+                  <md-input-container flex> <input mdInput #consultant placeholder="Consultant" [mdAutocomplete]="autoConsultants" (keyup)="filterConsultants(consultant.value)"
+                      name="consultant" ngModel></md-input-container>
+                  <md-autocomplete #autoConsultants="mdAutocomplete" [displayWith]="displayConsultantName">
+                    <md-option *ngFor="let c of filteredConsultants" [value]="c" (onSelectionChange)="fetchConsultant(c)">
+                      {{ c.name }}
+                    </md-option>
+                  </md-autocomplete>
+                </div>
+              </div>
+            </td-expansion-panel>
+            <md-card-actions style="padding-left:10px">
+              <button style="margin-right:5px" md-raised-button color='accent' (click)="savePatient(patientForm)">Save</button>
+              <button md-raised-button (click)="cancel()">Cancel</button>
+            </md-card-actions>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </md-card>
+</td-layout-nav>

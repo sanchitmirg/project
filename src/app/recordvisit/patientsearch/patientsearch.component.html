@@ -1,0 +1,21 @@
+<h3 md-dialog-title>Record Visit</h3>
+<md-dialog-content>
+  <form #schedule="ngForm">
+    <div layout='column'>
+      <md-input-container>
+        <input #patientsearch (keyup)="filterPatients(patient.value)" mdInput [mdAutocomplete]="autopatients" [(ngModel)]="clientSearchString"
+          placeholder="Search Patient" name="patientname">
+      </md-input-container>
+      <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName" (blur)="fetchPatient(c)">
+        <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" [value]="c">
+          {{ c.firstname }}
+        </md-option>
+      </md-autocomplete>
+    </div>
+  </form>
+</md-dialog-content>
+<md-dialog-actions layout="row" layout-align="start">
+  <md-card-actions> <button style="padding-left:20px" md-raised-button color='accent' (click)="recordVisit()">Record Visit</button>
+    <button md-raised-button (click)="cancel()">Cancel</button>
+  </md-card-actions>
+</md-dialog-actions>

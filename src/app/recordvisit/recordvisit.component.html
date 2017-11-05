@@ -1,0 +1,103 @@
+<td-layout-nav>
+  <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <span>Dev Clinic</span>
+    <span flex></span>
+  </div>
+  <div style="margin:10px;">
+    <md-card>
+      <md-card-title style="padding:5px; margin:10px">Record Visit</md-card-title>
+    </md-card>
+    <md-card style="padding-bottom:10px">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-1 col-md-2 col-lg-4" style="background-color:whitesmoke; margin:10px">
+            <md-card-title>{{ patientDetail.firstname }} {{patientDetail.lastname}}</md-card-title>
+
+            <md-card-subtitle>
+              <div>{{ patientDetail.number }}</div>
+              <span fxFlex></span>
+              <div>{{ patientDetail.emailId }}</div>
+              <div>Total Amount: {{patientDetail.totalAmount}}</div>
+              <div>Remaining Amount: {{patientDetail.pendingAmount}}</div>
+            </md-card-subtitle>
+          </div>
+        </div>
+      </div>
+    </md-card>
+    
+    <md-card>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-1 col-md-2 col-lg-2">
+            <h4>Add Treatments</h4>
+            <md-divider></md-divider>
+            <md-nav-list>
+              <ng-template let-item let-last="last" ngFor [ngForOf]="items">
+                <a md-list-item (click)="category(item)">{{item.title}}</a>
+              </ng-template>
+            </md-nav-list>
+          </div>
+          <div class="col-sm-1 col-md-2 col-lg-2">
+            <h4>Manage Treatments</h4>
+            <md-divider></md-divider>
+            <md-nav-list>
+              <ng-template let-item let-last="last" ngFor [ngForOf]="subcategories">
+                <a md-list-item (click)="subcategory(item)">{{item.name}}</a>
+              </ng-template>
+            </md-nav-list>
+          </div>
+          <div class="col-sm-10 col-md-8 col-lg-8">
+            <!--<mat-card-subtitle>Treatments</mat-card-subtitle>-->
+            <h4>Selected Treatments and Pricing</h4>
+            <md-divider></md-divider>
+            <md-nav-list>
+              <ng-template let-item let-last="last" ngFor [ngForOf]="visitDetails" let-i="index">
+                <div class="block">
+                  <md-card md-list-item style="background-color:whitesmoke; padding:10px">
+                    <div>
+                      <h4>{{ item.subcategory}}</h4>
+                    </div>
+                    <!--<md-card-title>{{item.name}}</md-card-title>-->
+                    <!-- <span fxFlex></span> -->
+                    <input mdInput name="price" #price placeholder="Price"> - <input #discount name="discount" mdInput placeholder="Discount"> = <input #final name="final" mdInput value="{{+price.value - +discount.value}}" (blur)="addPrice(i,price, discount, final)"
+                      placeholder="Final Price">
+                    <button type="button" (click)='deleteValue(i)' md-icon-button>
+                        <md-icon>highlight_off</md-icon>
+                      </button>
+                  </md-card>
+                </div>
+              </ng-template>
+            </md-nav-list>
+          </div>
+        </div>
+      </div>
+    </md-card>
+
+
+    <!-- <md-card>
+        <div layout="row">
+          <div layout="column" style="padding-left:30px">
+            <md-card-title>Payment Details</md-card-title>
+          </div>
+        </div>
+
+        <div layout="row" flex>
+            <div layout="column" style="padding-left:30px" flex>
+              <md-input-container flex> <input mdInput placeholder="Amount"  name="amount"  [(ngModel)]="paymentDetails.amountPaid"></md-input-container>
+            </div>
+            <div layout="column" style="padding-left:30px" flex>
+              <md-input-container flex> <input mdInput placeholder="Note" name="note"  [(ngModel)]="paymentDetails.note"></md-input-container>
+            </div>
+        </div>
+    </md-card> -->
+
+
+
+
+
+    <md-card-actions style="padding-left:30px">
+      <button style="margin-right:5px" md-raised-button color='accent' (click)="saveRecordVisit()">Save</button>
+      <button md-raised-button (click)="cancel()">Cancel</button>
+    </md-card-actions>
+  </div>
+</td-layout-nav>

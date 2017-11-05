@@ -1,0 +1,21 @@
+{
+    "general": [
+      {
+        "id": "1",
+        "name": "Mobile Tooth"
+      },
+      {
+        "id": "2",
+        "name": "Firm Tooth"
+      },
+      {
+        "id": "3",
+        "name": "Open Extraction"
+      },
+      {
+        "id": "4",
+        "name": "Root Stumps"
+      }
+
+    ]
+}

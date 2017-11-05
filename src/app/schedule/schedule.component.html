@@ -1,0 +1,48 @@
+<h3 md-dialog-title>Create Appointment</h3>
+<md-dialog-content>
+  <form #schedule="ngForm">
+    <div layout='column'>
+      <md-input-container>
+        <input #patientsearch (keyup)="filterPatients(patient.value)" mdInput [mdAutocomplete]="autopatients" placeholder="Search Patient"
+          name="patientname">
+      </md-input-container>
+      <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName" (blur)="fetchPatient(c)">
+        <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" [value]="c">
+          {{ c.firstname }}
+        </md-option>
+      </md-autocomplete>
+    </div>
+    <div layout="row" flex>
+      <div layout="column" flex>
+        <md-input-container flex> <input mdInput placeholder="When" name="date" [(ngModel)]="appointment.appointmentDate"></md-input-container>
+      </div>
+      <div layout="column" class="left-padding" flex>
+        <md-input-container flex> <input mdInput placeholder="From" name="fromtime" [(ngModel)]="appointment.startTime"></md-input-container>
+      </div>
+      <div layout="column" class="left-padding" flex>
+        <md-input-container flex> <input mdInput placeholder="To" name="totime" [(ngModel)]="appointment.endTime"></md-input-container>
+      </div>
+    </div>
+    <div layout="row" flex>
+      <div layout='column' flex>
+        <md-input-container flex> <input mdInput #consultant placeholder="Consultant" [mdAutocomplete]="autoConsultants" (keyup)="filterConsultants(consultant.value)"
+            name="consultant" ngModel></md-input-container>
+        <md-autocomplete #autoConsultants="mdAutocomplete" [displayWith]="displayConsultantName">
+          <md-option *ngFor="let c of filteredConsultants" [value]="c" (onSelectionChange)="fetchConsultant(c)">
+            {{ c.name }}
+          </md-option>
+        </md-autocomplete>
+      </div>
+    </div>
+    <div layout="row" flex>
+      <div layout="column" flex>
+        <md-input-container flex> <input mdInput placeholder="Notes" name="notes" [(ngModel)]="appointment.note"></md-input-container>
+      </div>
+    </div>
+  </form>
+</md-dialog-content>
+<md-dialog-actions layout="row" layout-align="start">
+  <md-card-actions> <button style="padding-left:20px" md-raised-button (click)="save()" color='accent'>SAVE</button>
+    <button md-raised-button (click)="cancel()">Cancel</button>
+  </md-card-actions>
+</md-dialog-actions>

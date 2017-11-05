@@ -1,0 +1,77 @@
+<h3 md-dialog-title>Quick Add Patient</h3>
+<ng-template tdLoading [tdLoadingUntil]="!(loading)" tdLoadingType="circular" tdLoadingMode="indeterminate" tdLoadingStrategy="overlay"
+  tdLoadingColor="primary">
+  <md-dialog-content>
+    <!-- <ng-template tdLoading [tdLoadingUntil]="!(loading)" tdLoadingType="circular" tdLoadingMode="indeterminate" tdLoadingStrategy="overlay" -->
+    <!-- tdLoadingColor="primary"> -->
+    <form #patientForm="ngForm">
+      <div layout="row" flex>
+        <div layout="column" class="left-padding top-padding" flex>
+          <md-input-container flex> <input mdInput #nameElement #nameControl="ngModel" placeholder="Firstname" [(ngModel)]="patientDetail.firstname"
+              name="firstname" required>
+            <md-hint align="start"> <span [hidden]="nameControl.pristine" class="tc-red-600">
+              <span [hidden]="!nameControl.errors?.required">Required</span> </span>
+            </md-hint>
+            <md-hint align="end">{{nameElement.value.length}} / 20</md-hint>
+          </md-input-container>
+        </div>
+        <div layout="column" class="left-padding top-padding" flex>
+          <md-input-container flex> <input mdInput #lastnameControl placeholder="Lastname" [(ngModel)]="patientDetail.lastname" name="lastname" required>
+            <md-hint align="start"> <span [hidden]="lastnameControl.pristine" class="tc-red-600">
+              <span [hidden]="!lastnameControl.errors?.required">Required</span> </span>
+            </md-hint>
+          </md-input-container>
+        </div>
+
+      </div>
+      <div layout="row" flex>
+        <div layout="column" class="left-padding" style="padding-top:10px" flex>
+          <md-select placeholder="Gender" name="gender" [(ngModel)]="patientDetail.gender">
+            <md-option *ngFor="let gender of genders" [value]="gender.value">
+              {{ gender.viewValue }}
+            </md-option>
+          </md-select>
+        </div>
+        <div layout="column" class="left-padding right-padding" flex>
+          <md-input-container flex> <input mdInput placeholder="Birth Date" [(ngModel)]="patientDetail.dob" name="dob">
+            <!-- <material-datepicker #myDatepicker></material-datepicker> -->
+          </md-input-container>
+
+        </div>
+
+      </div>
+      <!-- <div layout="row" flex>
+      <div layout="column" class="left-padding" flex>
+        <md-input-container flex> <input mdInput placeholder="Address" [(ngModel)]="patientDetail" name="address"></md-input-container>
+      </div>
+
+
+
+    </div> -->
+      <div layout="row" flex>
+        <div layout="column" class="left-padding" flex>
+          <md-input-container flex> <input mdInput placeholder="Mobile Number" [(ngModel)]="patientDetail.number" name="mobileNumber"></md-input-container>
+        </div>
+
+        <div layout="column" class="left-padding right-padding" flex>
+          <md-input-container flex> <input mdInput placeholder="Email" [(ngModel)]="patientDetail.emailId" name="email" email></md-input-container>
+        </div>
+
+      </div>
+      <div layout="row" flex>
+        <div layout="column" class="left-padding" flex>
+          <md-checkbox flex [(ngModel)]="patientDetail.sendWelcomeMessage" name="sendsms">Send Welcome Message</md-checkbox>
+        </div>
+        <div layout="column" class="left-padding" flex>
+          <md-checkbox flex [(ngModel)]="patientDetail.sendAddress" name="sendemail">Send Clinic Address</md-checkbox>
+        </div>
+      </div>
+    </form>
+    <!-- </ng-template> -->
+  </md-dialog-content>
+  <md-dialog-actions layout="row" layout-align="start">
+    <md-card-actions style="padding-left:20px"> <button style="padding-left:20px" (click)="save()" [disabled]="!patientForm.form.valid" md-raised-button color='accent'>SAVE</button>
+      <button md-raised-button (click)="cancel()">Cancel</button>
+    </md-card-actions>
+  </md-dialog-actions>
+</ng-template>

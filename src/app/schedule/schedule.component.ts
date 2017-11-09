@@ -11,6 +11,7 @@ import { AppointmentDetails } from '../shared/models/appointment';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
+  timeData: any[]=[];
 
   filteredPatients: any[] = [];
   patients: any[] = [];
@@ -30,6 +31,21 @@ export class ScheduleComponent implements OnInit {
   ngOnInit() {
     this.loadPatients();
     this.loadConsultants();
+
+    this.callTimeFunction();
+  }
+
+  callTimeFunction() {
+    this.http.get("/assets/time.json")
+      .map((res: Response) => res.json()['general'])
+      .subscribe((data) => {
+        this.timeData = data
+        console.log("Time data is", this.timeData)
+      })
+  }
+
+  onFromTimeChange(value){
+    console.log("The selected time is", value)
   }
 
   loadPatients() {

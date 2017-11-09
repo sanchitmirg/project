@@ -28,7 +28,7 @@ import { RecordvisitComponent } from './recordvisit/recordvisit.component';
 import { PatientsearchComponent } from './recordvisit/patientsearch/patientsearch.component';
 
 
-
+import {MomentModule} from 'angular2-moment';
 
 
 const httpInterceptorProviders: Type<any>[] = [
@@ -56,6 +56,7 @@ export function getAPI(): string {
     HttpModule,
     BrowserAnimationsModule,
     DatepickerModule,
+    MomentModule,
     SharedModule,
     CovalentHttpModule.forRoot({
       interceptors: [{

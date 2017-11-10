@@ -12,9 +12,13 @@ import { AppointmentDetails } from '../shared/models/appointment';
 })
 export class ScheduleComponent implements OnInit {
   timeData: any[]=[];
-
+  fTime:any;
+  tTime:any;
+  appDate: Date
+  selectedFromTime: any;
   filteredPatients: any[] = [];
   patients: any[] = [];
+  toTimeData:any[]=[];
 
   consultants: any[] = [];
   filteredConsultants: any[] = [];
@@ -45,8 +49,27 @@ export class ScheduleComponent implements OnInit {
   }
 
   onFromTimeChange(value){
-    console.log("The selected time is", value)
+    this.toTimeData =[];
+    console.log("Inside fromtime change function")
+    for(let i =0; i<=this.timeData.length; i++){
+      if(this.timeData[i].time === this.fTime){
+        this.selectedFromTime = this.timeData[i];
+        console.log("The selected time is", this.selectedFromTime);
+        break;
+      }
+        
+    }
+
+    for(let i =this.selectedFromTime.id; i<=this.timeData.length; i++){
+      this.toTimeData.push(this.timeData[i])
+    }
+    console.log("The to time data is", this.toTimeData)
   }
+
+  particularTime(element) {
+    return 
+  }
+
 
   loadPatients() {
     this.http.get(this.api.BASE_URL + 'patientDetails')
@@ -96,9 +119,14 @@ export class ScheduleComponent implements OnInit {
     return data ? data.firstname : data;
   }
 
+  dateSelected(date){
+    console.log("selected date is", date.date)
+  }
+
   save() {
-    console.log("the schedule is", this.appointment)
-    this.http.post(this.api.BASE_URL + 'appointment/save', JSON.stringify(this.appointment), {
+    console.log("the schedule is", this.appDate)
+
+    /* this.http.post(this.api.BASE_URL + 'appointment/save', JSON.stringify(this.appointment), {
       headers: new Headers({
         'Content-Type': 'application/json',
       }),
@@ -109,7 +137,7 @@ export class ScheduleComponent implements OnInit {
       }).subscribe((response) => {
         console.log("The response from server 2 is", response)
         // this.handleAuthentication(response);
-      })
+      }) */
   }
 
 }

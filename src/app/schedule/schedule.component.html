@@ -16,23 +16,23 @@
       <div layout="column" flex>
         <!--<md-input-container flex> -->
         <!--<input mdInput placeholder="When" name="date" [(ngModel)]="appointment.appointmentDate">-->
-        <material-datepicker style="padding-top:10px" name="dateschedule" [(ngModel)]="appointment.appointmentDate" #myDatepicker
+        <material-datepicker style="padding-top:10px" name="dateschedule" (onSelect)="dateSelected(myDatepicker)" #myDatepicker
           ngDefaultControl></material-datepicker>
         <!--</md-input-container>-->
       </div>
       <div layout="column" class="left-padding" style="padding-top:10px" flex>
         <!--<md-input-container flex> <input mdInput placeholder="From" name="fromtime" [(ngModel)]="appointment.startTime"></md-input-container>-->
-        <md-select placeholder="From Time">
+        <md-select placeholder="From Time" (change)="onFromTimeChange()" name="toTime" [(ngModel)]="fTime">
           <md-option *ngFor="let times of timeData" [value]="times.time">
             {{ times.time }}
           </md-option>
         </md-select>
       </div>
-      <div layout="column" class="left-padding" flex>
+      <div layout="column" class="left-padding" style="padding-top:10px" flex>
         <!--<md-input-container flex> <input mdInput placeholder="To" name="totime" [(ngModel)]="appointment.endTime"></md-input-container>-->
-        <md-select  placeholder="From Time">
-          <md-option *ngFor="let times of timeData" (onChange)="onFromTimeChange(value)" [value]="times.time">
-            {{ times.time }}
+        <md-select  #fromTime placeholder="To Time" (change)="onToTimeChange()" name="ftTime" [(ngModel)]="tTime">
+          <md-option *ngFor="let times of toTimeData"  [value]="times?.time">
+            {{ times?.time }}
           </md-option>
         </md-select>
       </div>

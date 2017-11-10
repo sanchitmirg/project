@@ -5,7 +5,7 @@ export class AppointmentDetails {
     id:number;
     patient: PatientDetail;
     consultant: ConsultantDetails;
-    appointmentDate:string;
+    appointmentDate:Date;
     startTime:string;
     endTime:string;
     note:string;

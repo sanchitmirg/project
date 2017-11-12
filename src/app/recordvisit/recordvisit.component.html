@@ -59,8 +59,8 @@
                     </div>
                     <!--<md-card-title>{{item.name}}</md-card-title>-->
                     <!-- <span fxFlex></span> -->
-                    <input mdInput name="price" #price placeholder="Price"> - <input #discount name="discount" mdInput placeholder="Discount"> = <input #final name="final" mdInput value="{{+price.value - +discount.value}}" (blur)="addPrice(i,price, discount, final)"
-                      placeholder="Final Price">
+                    <md-input-container flex><input mdInput name="price" #price placeholder="Price"></md-input-container> - <md-input-container><input #discount name="discount" mdInput placeholder="Discount"></md-input-container> = <md-input-container><input #final name="final" mdInput value="{{+price.value - +discount.value}}" (blur)="addPrice(i,price, discount, final)"
+                      placeholder="Final Price"></md-input-container>
                     <button type="button" (click)='deleteValue(i)' md-icon-button>
                         <md-icon>highlight_off</md-icon>
                       </button>
@@ -74,7 +74,7 @@
     </md-card>
 
 
-    <!-- <md-card>
+    <md-card>
         <div layout="row">
           <div layout="column" style="padding-left:30px">
             <md-card-title>Payment Details</md-card-title>
@@ -89,12 +89,7 @@
               <md-input-container flex> <input mdInput placeholder="Note" name="note"  [(ngModel)]="paymentDetails.note"></md-input-container>
             </div>
         </div>
-    </md-card> -->
-
-
-
-
-
+    </md-card>
     <md-card-actions style="padding-left:30px">
       <button style="margin-right:5px" md-raised-button color='accent' (click)="saveRecordVisit()">Save</button>
       <button md-raised-button (click)="cancel()">Cancel</button>

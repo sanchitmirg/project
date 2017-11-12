@@ -3,11 +3,11 @@
   <form #schedule="ngForm">
     <div layout='column'>
       <md-input-container>
-        <input #patientsearch (keyup)="filterPatients(patient.value)" mdInput [mdAutocomplete]="autopatients" [(ngModel)]="clientSearchString"
+        <input #patientsearch (keyup)="filterPatients(patientsearch.value)" mdInput [mdAutocomplete]="autopatients"
           placeholder="Search Patient" name="patientname">
       </md-input-container>
-      <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName" (blur)="fetchPatient(c)">
-        <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" [value]="c">
+      <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName" >
+        <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" [value]="c" (blur)="fetchPatient(c)">
           {{ c.firstname }}
         </md-option>
       </md-autocomplete>

@@ -126,4 +126,6 @@ export class RecordvisitComponent implements OnInit {
       })
   }
 
+  cancel(){}
+
 }

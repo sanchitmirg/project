@@ -15,11 +15,11 @@
                 </div>
                 <div layout='column' style="float:right; padding-left:20px">
                   <md-input-container>
-                    <input #patientsearch (keyup)="filterPatients(patient.value)" mdInput [mdAutocomplete]="autopatients" [(ngModel)] ="clientSearchString"
+                    <input #patientsearch (keyup)="filterPatients(patientsearch.value)" mdInput [mdAutocomplete]="autopatients" 
                       placeholder="Search Patient" name="patientname">
                   </md-input-container>
-                  <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName" (blur)="fetchPatient(c)">
-                    <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" [value]="c">
+                  <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName" >
+                    <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" [value]="c" (blur)="fetchPatient(c)">
                       {{ c.firstname }}
                     </md-option>
                   </md-autocomplete>
@@ -37,7 +37,7 @@
                     <md-input-container flex> <input mdInput placeholder="Lastname" name="lastname" [(ngModel)]="patient.lastname" ></md-input-container>
                   </div>
                   <div layout="column" class="left-padding right-padding top-padding" flex>
-                    <md-input-container flex> <input mdInput placeholder="Email" [(ngModel)]="patient.email" name="email"></md-input-container>
+                    <md-input-container flex> <input mdInput placeholder="Email" [(ngModel)]="patient.emailId" name="email"></md-input-container>
                   </div>
                 </div>
                 <div layout="row" flex>
@@ -126,13 +126,25 @@
               <div class="md-padding">
                 <div layout="row" flex>
                   <div layout="column" class="left-padding top-padding" flex>
-                    <md-input-container flex> <input mdInput placeholder="Date" [(ngModel)]="appointmentDetails.appointmentDate" name="date"></md-input-container>
+                    <!-- <md-input-container flex> <input mdInput placeholder="Date" [(ngModel)]="appointmentDetails.appointmentDate" name="date"></md-input-container> -->
+                    <material-datepicker style="padding-top:10px" name="dateschedule" (onSelect)="dateSelected(myDatepicker)" #myDatepicker
+                    ngDefaultControl></material-datepicker>
                   </div>
                   <div layout="column" class="left-padding top-padding" flex>
-                    <md-input-container flex> <input mdInput placeholder="startTime" [(ngModel)]="appointmentDetails.startTime" name="starttime"></md-input-container>
+                    <!-- <md-input-container flex> <input mdInput placeholder="startTime" [(ngModel)]="appointmentDetails.startTime" name="starttime"></md-input-container> -->
+                    <md-select placeholder="From Time" (change)="onFromTimeChange()" name="toTime" [(ngModel)]="fTime">
+                      <md-option *ngFor="let times of timeData" [value]="times.time">
+                        {{ times.time }}
+                      </md-option>
+                    </md-select>
                   </div>
                   <div layout="column" class="left-padding top-padding" flex>
-                    <md-input-container flex> <input mdInput placeholder="endTime" [(ngModel)]="appointmentDetails.endTime" name="Endtime"></md-input-container>
+                    <!-- <md-input-container flex> <input mdInput placeholder="endTime" [(ngModel)]="appointmentDetails.endTime" name="Endtime"></md-input-container> -->
+                    <md-select  #fromTime placeholder="To Time"  name="ftTime" [(ngModel)]="tTime">
+                      <md-option *ngFor="let times of toTimeData"  [value]="times?.time">
+                        {{ times?.time }}
+                      </md-option>
+                    </md-select>
                   </div>
                 </div>
               </div>

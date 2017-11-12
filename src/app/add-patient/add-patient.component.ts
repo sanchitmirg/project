@@ -68,6 +68,20 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
   consultant: ConsultantDetails = new ConsultantDetails();
   patientData: PatientData = new PatientData()
 
+  date:any;
+  month:any;
+  year:any;
+
+  fromTime: Date;
+  toTime: Date;
+  timeData: any[]=[];
+  fTime:any;
+  tTime:any;
+  toTimeData:any[]=[];
+  selectedFromTime: any;
+
+  disabled:any;
+
   constructor(
     private api: ApiService,
     private http: Http
@@ -78,10 +92,36 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
     this.loadStates();
     this.loadConsultants();
     this.loadPatients();
+    this.callTimeFunction();
   }
 
   ngAfterViewInit(): void {
     // this.media.broadcast();
+  }
+
+  callTimeFunction() {
+    this.http.get("/assets/time.json")
+      .map((res: Response) => res.json()['general'])
+      .subscribe((data) => {
+        this.timeData = data
+        console.log("Time data is", this.timeData)
+      })
+  }
+
+  onFromTimeChange(){
+    this.toTimeData =[];
+    for(let i =0; i<=this.timeData.length; i++){
+      if(this.timeData[i].time === this.fTime){
+        this.selectedFromTime = this.timeData[i];
+        break;
+      }
+        
+    }
+
+    for(let i =this.selectedFromTime.id; i<=this.timeData.length; i++){
+      this.toTimeData.push(this.timeData[i])
+    }
+    console.log("The to time data is", this.toTimeData)
   }
 
   loadPatients() {
@@ -169,7 +209,11 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
     });
   }
 
-  
+  dateSelected(date){
+    this.date = date.date.getDate(date.date)
+    this.month = date.date.getMonth(date.date)
+    this.year = date.date.getFullYear(date.date)
+  }
 
   displayStateName(data: any) {
     return data ? data.name : data;
@@ -199,7 +243,14 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
 
 
   savePatient(patientdata) {
-    
+    var i = this.fTime.indexOf(':')
+    var j = this.tTime.indexOf(':')
+    this.fromTime = new Date(this.year, this.month, this.date, this.fTime.slice(0,i), this.fTime.slice(i+1));
+    this.toTime = new Date(this.year, this.month, this.date, this.tTime.slice(0,i), this.tTime.slice(i+1));
+
+    this.appointmentDetails.appointmentStartDate = this.fromTime;
+    this.appointmentDetails.appointmentEndDate = this.toTime;
+
     this.patientData.patientDetail = this.patient;
     this.patientData.addressDetail = this.address;
     this.patientData.appointmentDetail = this.appointmentDetails;
@@ -224,4 +275,6 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
         // this.handleAuthentication(response);
       })
   }
+
+  cancel(){ }
 }

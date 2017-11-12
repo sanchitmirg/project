@@ -3,11 +3,12 @@ import { ConsultantDetails } from "./consultant";
 
 export class AppointmentDetails {
     id:number;
-    patient: PatientDetail;
-    consultant: ConsultantDetails;
+    patient: PatientDetail = new PatientDetail();
+    consultant: ConsultantDetails = new ConsultantDetails();
     appointmentDate:Date;
-    startTime:string;
-    endTime:string;
-    note:string;
-    
+    /* startTime:string;
+    endTime:string; */
+    notes:string;
+    appointmentStartDate:Date;
+    appointmentEndDate:Date;
 }

@@ -26,6 +26,15 @@ export class ScheduleComponent implements OnInit {
   patient: PatientDetail = new PatientDetail();
   appointment: AppointmentDetails = new AppointmentDetails();
 
+  date:any;
+  month:any;
+  year:any;
+
+  fromTime: Date;
+  toTime: Date;
+
+  successful: boolean = false;
+
   constructor(
     public dialogRef: MdDialogRef<ScheduleComponent>,
     private api: ApiService,
@@ -48,13 +57,11 @@ export class ScheduleComponent implements OnInit {
       })
   }
 
-  onFromTimeChange(value){
+  onFromTimeChange(){
     this.toTimeData =[];
-    console.log("Inside fromtime change function")
     for(let i =0; i<=this.timeData.length; i++){
       if(this.timeData[i].time === this.fTime){
         this.selectedFromTime = this.timeData[i];
-        console.log("The selected time is", this.selectedFromTime);
         break;
       }
         
@@ -85,6 +92,13 @@ export class ScheduleComponent implements OnInit {
   filterPatients = (filterTerm: string) => {
     const filterText: string = filterTerm.toLowerCase();
     this.filteredPatients = this.patients.filter((e: any) => {
+      return (!filterText || e.firstname.toLowerCase().indexOf(filterText.toLowerCase()) > -1);
+    });
+  }
+
+  filterConsultants = (filterTerm: string) => {
+    const filterText: string = filterTerm.toLowerCase();
+    this.filteredConsultants = this.consultants.filter((e: any) => {
       return (!filterText || e.firstname.toLowerCase().indexOf(filterText.toLowerCase()) > -1);
     });
   }
@@ -120,13 +134,24 @@ export class ScheduleComponent implements OnInit {
   }
 
   dateSelected(date){
-    console.log("selected date is", date.date)
+    this.date = date.date.getDate(date.date)
+    this.month = date.date.getMonth(date.date)
+    this.year = date.date.getFullYear(date.date)
   }
 
   save() {
-    console.log("the schedule is", this.appDate)
 
-    /* this.http.post(this.api.BASE_URL + 'appointment/save', JSON.stringify(this.appointment), {
+    var i = this.fTime.indexOf(':')
+    var j = this.tTime.indexOf(':')
+    this.fromTime = new Date(this.year, this.month, this.date, this.fTime.slice(0,i), this.fTime.slice(i+1));
+    this.toTime = new Date(this.year, this.month, this.date, this.tTime.slice(0,i), this.tTime.slice(i+1));
+
+    this.appointment.appointmentStartDate = this.fromTime;
+    this.appointment.appointmentEndDate = this.toTime;
+
+    console.log("The appointment object is", this.appointment);
+
+    this.http.post(this.api.BASE_URL + 'appointment/save', JSON.stringify(this.appointment), {
       headers: new Headers({
         'Content-Type': 'application/json',
       }),
@@ -135,9 +160,12 @@ export class ScheduleComponent implements OnInit {
         console.log("The response from appointment save server is", res.json())
         return res.json();
       }).subscribe((response) => {
+        this.appointment = new AppointmentDetails();
         console.log("The response from server 2 is", response)
+        if(response.code === 200)
+        this.successful = true;
         // this.handleAuthentication(response);
-      }) */
+      })
   }
 
 }

@@ -3,19 +3,17 @@
   <form #schedule="ngForm">
     <div layout='column'>
       <md-input-container>
-        <input #patientsearch (keyup)="filterPatients(patient.value)" mdInput [mdAutocomplete]="autopatients" placeholder="Search Patient"
+        <input #patientsearch (keyup)="filterPatients(patientsearch.value)" mdInput [mdAutocomplete]="autopatients" placeholder="Search Patient"
           name="patientname">
       </md-input-container>
-      <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName" (blur)="fetchPatient(c)">
-        <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" [value]="c">
+      <md-autocomplete #autopatients="mdAutocomplete" [displayWith]="displayPatientName">
+        <md-option *ngFor="let c of filteredPatients" (onSelectionChange)="fetchPatient(c)" (blur)="fetchPatient(c)" [value]="c">
           {{ c.firstname }}
         </md-option>
       </md-autocomplete>
     </div>
     <div layout="row" flex>
       <div layout="column" flex>
-        <!--<md-input-container flex> -->
-        <!--<input mdInput placeholder="When" name="date" [(ngModel)]="appointment.appointmentDate">-->
         <material-datepicker style="padding-top:10px" name="dateschedule" (onSelect)="dateSelected(myDatepicker)" #myDatepicker
           ngDefaultControl></material-datepicker>
         <!--</md-input-container>-->
@@ -30,7 +28,7 @@
       </div>
       <div layout="column" class="left-padding" style="padding-top:10px" flex>
         <!--<md-input-container flex> <input mdInput placeholder="To" name="totime" [(ngModel)]="appointment.endTime"></md-input-container>-->
-        <md-select  #fromTime placeholder="To Time" (change)="onToTimeChange()" name="ftTime" [(ngModel)]="tTime">
+        <md-select  #fromTime placeholder="To Time"  name="ftTime" [(ngModel)]="tTime">
           <md-option *ngFor="let times of toTimeData"  [value]="times?.time">
             {{ times?.time }}
           </md-option>
@@ -50,9 +48,10 @@
     </div>
     <div layout="row" flex>
       <div layout="column" flex>
-        <md-input-container flex> <input mdInput placeholder="Notes" name="notes" [(ngModel)]="appointment.note"></md-input-container>
+        <md-input-container flex> <input mdInput placeholder="Notes" name="notes" [(ngModel)]="appointment.notes"></md-input-container>
       </div>
     </div>
+    <div *ngIf="successful" style="color: green;">Schedule Created Successfully!!</div>
   </form>
 </md-dialog-content>
 <md-dialog-actions layout="row" layout-align="start">
